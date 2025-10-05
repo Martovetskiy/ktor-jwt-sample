@@ -9,7 +9,6 @@ import domain.exception.LoginFailedException
 import domain.exception.UserNotFoundException
 import domain.repository.UserRepository
 import domain.vo.Email
-import org.slf4j.LoggerFactory
 
 class LoginUseCase(
     private val authTokenService: AuthTokenService,
@@ -17,8 +16,6 @@ class LoginUseCase(
     private val passwordProvider: PasswordProvider
 ) {
     suspend fun execute(request: LoginRequest): LoginResponse{
-        val logger = LoggerFactory.getLogger(LoginUseCase::class.java)
-        logger.info(request.email)
         val user = userRepository.findByEmail(Email(request.email)) ?: throw UserNotFoundException(request.email)
         val isPasswordEqual = passwordProvider.equals(request.password, user.passwordHash.value)
 
