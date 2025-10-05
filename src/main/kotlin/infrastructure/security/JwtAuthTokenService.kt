@@ -19,8 +19,6 @@ class JwtAuthTokenService(
         .withAudience(config.aud)
         .build()
 
-    val logger = LoggerFactory.getLogger(JwtAuthTokenService::class.java)
-
     override fun createTokens(userId: Int): TokensResponse {
         val now = Instant.now()
 
