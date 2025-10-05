@@ -8,7 +8,7 @@ group = "com.rednoir"
 version = "0.0.1"
 
 application {
-    mainClass = "io.ktor.server.netty.EngineMain"
+    mainClass = "io.ktor.server.cio.EngineMain"
 }
 
 dependencies {

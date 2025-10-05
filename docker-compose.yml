@@ -1,0 +1,99 @@
+# Compose v2 does not require a version key, but you can keep '3.9' if you prefer.
+# version: '3.9'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ktor-jwt-sample:latest
+    container_name: ktor_jwt_sample
+    environment:
+      DEVELOPMENT: "true"
+      DROP_DB: "false"
+      DATABASE_TYPE: "JDBC"
+      JDBC_DRIVER: "org.postgresql.Driver"
+      JDBC_URL: "jdbc:postgresql://postgres-db:5432/ktor_jwt_sample"
+      JDBC_SCHEMA: "public"
+      JDBC_USERNAME: "postgres"
+      JDBC_PASSWORD: "postgres"
+      JWT_ISS: "your-issuer"
+      JWT_SUB: "your-subject"
+      JWT_AUD: "your-audience"
+      JWT_SECRET: "supersecretjwtkey"
+      JWT_ACCESS_TOKEN_EXPIRATION_MILLIS: "900000"
+      JWT_REFRESH_TOKEN_EXPIRATION_MILLIS: "604800000"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:8080/health || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    depends_on:
+      postgres-db:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+    networks:
+      - app-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 768M
+          cpus: "0.75"
+        reservations:
+          memory: 256M
+
+  postgres-db:
+    image: postgres:18
+    container_name: postgres_db
+    environment:
+      POSTGRES_DB: ktor_jwt_sample
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d ktor_jwt_sample || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 10s
+    restart: unless-stopped
+    networks:
+      - app-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  pgadmin:
+    image: dpage/pgadmin4:9.1.0
+    container_name: pgadmin
+    profiles: ["dev"]
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    depends_on:
+      postgres-db:
+        condition: service_healthy
+    ports:
+      - "5050:80"
+    restart: unless-stopped
+    networks:
+      - app-network
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  app-network:
+    driver: bridge
