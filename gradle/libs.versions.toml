@@ -1,0 +1,76 @@
+[versions]
+ktor = "2.3.7"
+kotlinx-json = "1.6.0"
+java-jwt = "4.4.0"
+jbcrypt = "0.4"
+logback = "1.5.13"
+kotlin = "1.9.21"
+
+exposed = "0.61.0"
+hikari = "5.0.1"
+postgres = "42.7.8"
+h2 = "2.4.240"
+
+liquibase = "4.23.2"
+
+swagger = "1.0.57"
+
+dotenv = "6.5.1"
+
+koin = "3.5.0"
+
+serialization = "2.1.10"
+
+[libraries]
+exposed-dao = { module = "org.jetbrains.exposed:exposed-dao", version.ref = "exposed" }
+exposed-jdbc = { module = "org.jetbrains.exposed:exposed-jdbc", version.ref = "exposed" }
+exposed-java-time = { module = "org.jetbrains.exposed:exposed-java-time", version.ref = "exposed" }
+hikari = { module = "com.zaxxer:HikariCP", version.ref = "hikari" }
+postgres = { module = "org.postgresql:postgresql", version.ref = "postgres" }
+h2 = { module = "com.h2database:h2", version.ref = "h2" }
+
+ktor-server-content-negotiation = { module = "io.ktor:ktor-server-content-negotiation", version.ref = "ktor" }
+ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
+ktor-server-auth-jwt = { module = "io.ktor:ktor-server-auth-jwt", version.ref = "ktor" }
+ktor-server-auth = { module = "io.ktor:ktor-server-auth", version.ref = "ktor" }
+ktor-server-core-jvm = { module = "io.ktor:ktor-server-core-jvm", version.ref = "ktor" }
+ktor-server-cio = { module = "io.ktor:ktor-server-cio", version.ref = "ktor" }
+ktor-server-core = { module = "io.ktor:ktor-server-core", version.ref = "ktor" }
+ktor-server-config-yaml = { module = "io.ktor:ktor-server-config-yaml", version.ref = "ktor" }
+ktor-server-cors = { module = "io.ktor:ktor-server-cors-jvm", version.ref = "ktor" }
+ktor-server-openapi = { module = "io.ktor:ktor-server-openapi", version.ref = "ktor" }
+ktor-server-swagger = { module = "io.ktor:ktor-server-swagger", version.ref = "ktor" }
+
+#Swagger
+swagger-codegen-generators = {module = "io.swagger.codegen.v3:swagger-codegen-generators", version.ref = "swagger"}
+
+# Koin
+koin-ktor = { module = "io.insert-koin:koin-ktor", version.ref = "koin"}
+koin-logger-slf4j = { module = "io.insert-koin:koin-logger-slf4j", version.ref = "koin"}
+
+# Migrations
+liquibase-core = { module = "org.liquibase:liquibase-core", version.ref = "liquibase" }
+
+# DotEnv
+dotenv-kotlin = { module = "io.github.cdimascio:dotenv-kotlin", version.ref = "dotenv" }
+
+# JSON serialization
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-json" }
+
+# JWT
+java-jwt = { module = "com.auth0:java-jwt", version.ref = "java-jwt" }
+
+# Password hashing
+jbcrypt = { module = "org.mindrot:jbcrypt", version.ref = "jbcrypt" }
+
+# Logging
+logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
+
+# Kotlin
+kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
+
+# Ktor тесты
+ktor-server-test-host = { module = "io.ktor:ktor-server-test-host", version.ref = "ktor" }
+
+[plugins]
+jetbrains-kotlin-plugin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "serialization" }
