@@ -1,10 +1,11 @@
 package com.rednoir.domain.vo
 
-import com.rednoir.domain.exception.InvalidEmailException
+import com.rednoir.domain.exception.EmailInvalidException
+
 
 data class Email(override val value: String): ValueClass<String> {
     init {
-        require(isValidEmail(value)) { InvalidEmailException(value) }
+        require(isValidEmail(value)) { EmailInvalidException(value) }
     }
 
     companion object {
