@@ -1,4 +1,4 @@
-package com.rednoir.infrastructure.service
+package infrastructure.service
 
 import application.dto.auth.LoginRequest
 import application.dto.auth.LoginResponse

@@ -5,8 +5,8 @@ import application.service.AuthService
 import application.service.AuthTokenService
 import domain.repository.UserRepository
 import infrastructure.security.BCryptPasswordProvider
-import com.rednoir.infrastructure.security.JwtAuthTokenService
-import com.rednoir.infrastructure.service.AuthServiceImpl
+import infrastructure.security.JwtAuthTokenService
+import infrastructure.service.AuthServiceImpl
 import infrastructure.config.Config
 import infrastructure.config.ConfigLoader
 import infrastructure.repository.UserRepositoryImpl

@@ -3,7 +3,7 @@ package presentation.plugins
 import application.service.AuthTokenService
 import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.exceptions.JWTVerificationException
-import com.rednoir.infrastructure.security.JwtAuthTokenService
+import infrastructure.security.JwtAuthTokenService
 import infrastructure.exception.TokenWrongType
 import io.ktor.server.application.*
 import io.ktor.server.application.install

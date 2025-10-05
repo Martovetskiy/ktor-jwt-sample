@@ -1,13 +1,12 @@
-package com.rednoir.infrastructure.security
+package infrastructure.security
 
+import application.dto.auth.TokensResponse
+import application.service.AuthTokenService
 import com.auth0.jwt.JWT
 import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
-import application.dto.auth.TokensResponse
-import application.service.AuthTokenService
 import infrastructure.config.JwtConfig
 import infrastructure.exception.TokenWrongType
-import org.slf4j.LoggerFactory
 import java.time.Instant
 
 class JwtAuthTokenService(
