@@ -1,4 +1,4 @@
-package com.rednoir.domain.repository
+package domain.repository
 
 interface BaseRepository<Entity: Any, ID: Any> {
     suspend fun findById(id: ID): Entity?

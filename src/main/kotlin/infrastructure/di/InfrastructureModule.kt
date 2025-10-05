@@ -1,10 +1,10 @@
 package infrastructure.di
 
-import com.rednoir.application.PasswordProvider
-import com.rednoir.application.service.AuthService
-import com.rednoir.application.service.AuthTokenService
-import com.rednoir.domain.repository.UserRepository
-import com.rednoir.infrastructure.security.BCryptPasswordProvider
+import application.PasswordProvider
+import application.service.AuthService
+import application.service.AuthTokenService
+import domain.repository.UserRepository
+import infrastructure.security.BCryptPasswordProvider
 import com.rednoir.infrastructure.security.JwtAuthTokenService
 import com.rednoir.infrastructure.service.AuthServiceImpl
 import infrastructure.config.Config

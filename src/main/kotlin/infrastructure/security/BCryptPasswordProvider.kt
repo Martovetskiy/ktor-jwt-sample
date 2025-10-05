@@ -1,6 +1,6 @@
-package com.rednoir.infrastructure.security
+package infrastructure.security
 
-import com.rednoir.application.PasswordProvider
+import application.PasswordProvider
 import org.mindrot.jbcrypt.BCrypt
 
 class BCryptPasswordProvider : PasswordProvider {

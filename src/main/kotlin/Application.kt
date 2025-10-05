@@ -1,5 +1,3 @@
-package com.rednoir
-
 import io.ktor.server.application.*
 import io.ktor.server.cio.EngineMain
 

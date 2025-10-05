@@ -1,8 +1,6 @@
 package infrastructure.config
 
-import com.rednoir.infrastructure.config.JDBC
-import com.rednoir.infrastructure.config.JwtConfig
-import com.rednoir.infrastructure.database.DatabaseFactory
+import infrastructure.database.DatabaseFactory
 
 data class Config(
     val development: Boolean,

@@ -3,10 +3,10 @@ package com.rednoir.infrastructure.security
 import com.auth0.jwt.JWT
 import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
-import com.rednoir.application.dto.auth.TokensResponse
-import com.rednoir.application.service.AuthTokenService
-import com.rednoir.infrastructure.config.JwtConfig
-import com.rednoir.infrastructure.exception.TokenWrongType
+import application.dto.auth.TokensResponse
+import application.service.AuthTokenService
+import infrastructure.config.JwtConfig
+import infrastructure.exception.TokenWrongType
 import java.time.Instant
 
 class JwtAuthTokenService(

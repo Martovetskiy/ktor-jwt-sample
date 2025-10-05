@@ -1,4 +1,4 @@
-package com.rednoir.application.dto.auth
+package application.dto.auth
 
 import java.time.Instant
 

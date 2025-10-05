@@ -1,14 +1,14 @@
-package com.rednoir.application.usecase
+package application.usecase
 
-import com.rednoir.application.PasswordProvider
-import com.rednoir.application.dto.auth.RegisterRequest
-import com.rednoir.application.dto.auth.RegisterResponse
-import com.rednoir.application.dto.user.UserResponse
-import com.rednoir.domain.entity.User
-import com.rednoir.domain.exception.UserAlreadyExistException
-import com.rednoir.domain.repository.UserRepository
-import com.rednoir.domain.vo.Email
-import com.rednoir.domain.vo.PasswordHash
+import application.PasswordProvider
+import application.dto.auth.RegisterRequest
+import application.dto.auth.RegisterResponse
+import application.dto.user.UserResponse
+import domain.entity.User
+import domain.exception.UserAlreadyExistException
+import domain.repository.UserRepository
+import domain.vo.Email
+import domain.vo.PasswordHash
 
 class RegisterUseCase(
     private val userRepository: UserRepository,

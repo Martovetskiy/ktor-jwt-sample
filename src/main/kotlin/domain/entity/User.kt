@@ -1,7 +1,7 @@
-package com.rednoir.domain.entity
+package domain.entity
 
-import com.rednoir.domain.vo.Email
-import com.rednoir.domain.vo.PasswordHash
+import domain.vo.Email
+import domain.vo.PasswordHash
 
 data class User(
     override val id: Int = -1,

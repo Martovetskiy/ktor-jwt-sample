@@ -1,14 +1,14 @@
-package com.rednoir.application.usecase
+package application.usecase
 
-import com.rednoir.application.PasswordProvider
-import com.rednoir.application.dto.auth.LoginRequest
-import com.rednoir.application.dto.auth.LoginResponse
-import com.rednoir.application.dto.user.UserResponse
-import com.rednoir.application.service.AuthTokenService
-import com.rednoir.domain.exception.LoginFailedException
-import com.rednoir.domain.exception.UserNotFoundException
-import com.rednoir.domain.repository.UserRepository
-import com.rednoir.domain.vo.Email
+import application.PasswordProvider
+import application.dto.auth.LoginRequest
+import application.dto.auth.LoginResponse
+import application.dto.user.UserResponse
+import application.service.AuthTokenService
+import domain.exception.LoginFailedException
+import domain.exception.UserNotFoundException
+import domain.repository.UserRepository
+import domain.vo.Email
 
 class LoginUseCase(
     private val authTokenService: AuthTokenService,

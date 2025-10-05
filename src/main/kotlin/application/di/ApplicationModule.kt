@@ -1,8 +1,8 @@
-package com.rednoir.application.di
+package application.di
 
-import com.rednoir.application.usecase.LoginUseCase
-import com.rednoir.application.usecase.RefreshTokensUseCase
-import com.rednoir.application.usecase.RegisterUseCase
+import application.usecase.LoginUseCase
+import application.usecase.RefreshTokensUseCase
+import application.usecase.RegisterUseCase
 import org.koin.dsl.module
 
 val applicationModule = module {

@@ -1,7 +1,5 @@
 package infrastructure.config
 
-import com.rednoir.infrastructure.config.JDBC
-import com.rednoir.infrastructure.config.JwtConfig
 import io.github.cdimascio.dotenv.dotenv
 import kotlin.text.toBooleanStrictOrNull
 import kotlin.text.toLongOrNull

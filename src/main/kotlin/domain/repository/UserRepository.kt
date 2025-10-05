@@ -1,7 +1,7 @@
-package com.rednoir.domain.repository
+package domain.repository
 
-import com.rednoir.domain.entity.User
-import com.rednoir.domain.vo.Email
+import domain.entity.User
+import domain.vo.Email
 
 interface UserRepository : BaseRepository<User, Int> {
     suspend fun findByEmail(email: Email): User?

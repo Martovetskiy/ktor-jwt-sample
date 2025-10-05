@@ -1,6 +1,6 @@
-package com.rednoir.application.service
+package application.service
 
-import com.rednoir.application.dto.auth.TokensResponse
+import application.dto.auth.TokensResponse
 
 interface AuthTokenService {
     fun createTokens(userId: Int): TokensResponse

@@ -1,8 +1,8 @@
-package com.rednoir.application.usecase
+package application.usecase
 
-import com.rednoir.application.dto.auth.RefreshTokensRequest
-import com.rednoir.application.dto.auth.TokensResponse
-import com.rednoir.application.service.AuthTokenService
+import application.dto.auth.RefreshTokensRequest
+import application.dto.auth.TokensResponse
+import application.service.AuthTokenService
 
 class RefreshTokensUseCase(
     private val authTokenService: AuthTokenService

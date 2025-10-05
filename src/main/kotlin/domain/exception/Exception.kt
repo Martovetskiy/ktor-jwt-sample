@@ -1,4 +1,4 @@
-package com.rednoir.domain.exception
+package domain.exception
 
 //TODO: Create more custom exceptions for repository, etc
 

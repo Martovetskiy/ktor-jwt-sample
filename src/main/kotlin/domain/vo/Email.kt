@@ -1,6 +1,6 @@
-package com.rednoir.domain.vo
+package domain.vo
 
-import com.rednoir.domain.exception.EmailInvalidException
+import domain.exception.EmailInvalidException
 
 
 data class Email(override val value: String): ValueClass<String> {

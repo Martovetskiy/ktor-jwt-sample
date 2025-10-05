@@ -1,4 +1,4 @@
-package com.rednoir.application.dto.user
+package application.dto.user
 
 data class UserResponse(
     val email: String

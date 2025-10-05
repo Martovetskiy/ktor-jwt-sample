@@ -1,6 +1,6 @@
-package com.rednoir.infrastructure.database
+package infrastructure.database
 
-import com.rednoir.infrastructure.config.JDBC
+import infrastructure.config.JDBC
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import liquibase.Liquibase

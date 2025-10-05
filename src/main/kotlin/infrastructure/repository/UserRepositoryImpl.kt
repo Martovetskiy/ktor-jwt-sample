@@ -1,10 +1,10 @@
 package infrastructure.repository
 
-import com.rednoir.domain.entity.User
-import com.rednoir.domain.repository.UserRepository
-import com.rednoir.domain.vo.Email
+import domain.entity.User
+import domain.repository.UserRepository
+import domain.vo.Email
 import infrastructure.database.entity.UserEntity
-import com.rednoir.infrastructure.database.table.UserTable
+import infrastructure.database.table.UserTable
 import org.jetbrains.exposed.sql.transactions.transaction
 
 class UserRepositoryImpl : UserRepository {

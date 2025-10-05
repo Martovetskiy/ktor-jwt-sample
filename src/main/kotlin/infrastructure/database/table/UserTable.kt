@@ -1,4 +1,4 @@
-package com.rednoir.infrastructure.database.table
+package infrastructure.database.table
 
 import org.jetbrains.exposed.dao.id.IntIdTable
 

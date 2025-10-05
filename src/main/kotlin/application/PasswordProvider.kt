@@ -1,4 +1,4 @@
-package com.rednoir.application
+package application
 
 interface PasswordProvider {
     fun hash(password: String): String

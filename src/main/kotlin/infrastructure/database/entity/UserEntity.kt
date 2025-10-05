@@ -1,9 +1,9 @@
 package infrastructure.database.entity
 
-import com.rednoir.domain.entity.User
-import com.rednoir.domain.vo.Email
-import com.rednoir.domain.vo.PasswordHash
-import com.rednoir.infrastructure.database.table.UserTable
+import domain.entity.User
+import domain.vo.Email
+import domain.vo.PasswordHash
+import infrastructure.database.table.UserTable
 import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
 import org.jetbrains.exposed.dao.id.EntityID

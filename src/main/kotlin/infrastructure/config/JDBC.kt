@@ -1,4 +1,4 @@
-package com.rednoir.infrastructure.config
+package infrastructure.config
 
 data class JDBC(
     val driver: String,

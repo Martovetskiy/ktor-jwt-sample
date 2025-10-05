@@ -1,15 +1,15 @@
 package com.rednoir.infrastructure.service
 
-import com.rednoir.application.dto.auth.LoginRequest
-import com.rednoir.application.dto.auth.LoginResponse
-import com.rednoir.application.dto.auth.RefreshTokensRequest
-import com.rednoir.application.dto.auth.RegisterRequest
-import com.rednoir.application.dto.auth.RegisterResponse
-import com.rednoir.application.dto.auth.TokensResponse
-import com.rednoir.application.service.AuthService
-import com.rednoir.application.usecase.LoginUseCase
-import com.rednoir.application.usecase.RefreshTokensUseCase
-import com.rednoir.application.usecase.RegisterUseCase
+import application.dto.auth.LoginRequest
+import application.dto.auth.LoginResponse
+import application.dto.auth.RefreshTokensRequest
+import application.dto.auth.RegisterRequest
+import application.dto.auth.RegisterResponse
+import application.dto.auth.TokensResponse
+import application.service.AuthService
+import application.usecase.LoginUseCase
+import application.usecase.RefreshTokensUseCase
+import application.usecase.RegisterUseCase
 
 class AuthServiceImpl(
     private val loginUseCase: LoginUseCase,

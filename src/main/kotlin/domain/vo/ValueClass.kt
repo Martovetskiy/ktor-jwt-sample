@@ -1,4 +1,4 @@
-package com.rednoir.domain.vo
+package domain.vo
 
 interface ValueClass<T: Any> {
     val value: T
