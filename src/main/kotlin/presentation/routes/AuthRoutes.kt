@@ -1,27 +1,23 @@
 package presentation.routes
 
-import application.service.AuthService
-import io.ktor.http.*
-import io.ktor.server.request.*
-import io.ktor.server.request.receive
-import io.ktor.server.response.*
-import io.ktor.server.response.respond
-import io.ktor.server.routing.*
-import io.ktor.server.routing.post
-import io.ktor.server.routing.route
-import presentation.dto.user.UserResponse
 import application.dto.auth.LoginRequest
 import application.dto.auth.RefreshTokensRequest
-import domain.exception.UserNotFoundException
-import presentation.dto.auth.LoginResponse
 import application.dto.auth.RegisterRequest
+import application.service.AuthService
 import domain.exception.UserAlreadyExistException
+import domain.exception.UserNotFoundException
 import infrastructure.exception.TokenWrongType
+import io.ktor.http.*
+import io.ktor.server.request.*
+import io.ktor.server.response.*
+import io.ktor.server.routing.*
+import presentation.dto.auth.LoginResponse
 import presentation.dto.auth.RegisterResponse
 import presentation.dto.auth.TokensResponse
+import presentation.dto.user.UserResponse
 import presentation.dto.auth.LoginRequest as LoginRequestPres
-import presentation.dto.auth.RegisterRequest as RegisterRequestPres
 import presentation.dto.auth.RefreshTokensRequest as RefreshTokensRequestPres
+import presentation.dto.auth.RegisterRequest as RegisterRequestPres
 
 fun Route.authRoutes(
     authService: AuthService
