@@ -7,16 +7,19 @@ import application.dto.auth.TokensResponse
 import application.service.AuthTokenService
 import infrastructure.config.JwtConfig
 import infrastructure.exception.TokenWrongType
+import org.slf4j.LoggerFactory
 import java.time.Instant
 
 class JwtAuthTokenService(
     private val config: JwtConfig
 ) : AuthTokenService {
     private val algorithm: Algorithm = Algorithm.HMAC256(config.secret)
-    private val verifier: JWTVerifier = JWT.require(algorithm)
+    val verifier: JWTVerifier = JWT.require(algorithm)
         .withIssuer(config.iss)
         .withAudience(config.aud)
         .build()
+
+    val logger = LoggerFactory.getLogger(JwtAuthTokenService::class.java)
 
     override fun createTokens(userId: Int): TokensResponse {
         val now = Instant.now()
@@ -50,14 +53,15 @@ class JwtAuthTokenService(
 
     override fun validateAccessToken(token: String): Int {
         val decoded = verifier.verify(token)
-        if (decoded.claims[JwtClaims.TYPE].toString() != TokenType.ACCESS_TOKEN.name) throw TokenWrongType("Is not ${TokenType.ACCESS_TOKEN.name}")
+        if (decoded.claims[JwtClaims.TYPE]!!.asString() != TokenType.ACCESS_TOKEN.name) throw TokenWrongType("Is not ${TokenType.ACCESS_TOKEN.name}")
         return decoded.subject.toInt()
     }
 
     override fun validateRefreshToken(token: String): Int {
         //TODO: Create revoke mechanism
         val decoded = verifier.verify(token)
-        if (decoded.claims[JwtClaims.TYPE].toString() != TokenType.REFRESH_TOKEN.name) throw TokenWrongType("Is not ${TokenType.REFRESH_TOKEN.name}")
+
+        if (decoded.claims[JwtClaims.TYPE]!!.asString() != TokenType.REFRESH_TOKEN.name) throw TokenWrongType("Is ${decoded.claims[JwtClaims.TYPE].toString()} not ${TokenType.REFRESH_TOKEN.name}")
         return decoded.subject.toInt()
     }
 }
