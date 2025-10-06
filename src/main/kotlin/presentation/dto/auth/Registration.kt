@@ -1,15 +1,15 @@
 package presentation.dto.auth
 
 import kotlinx.serialization.Serializable
-import presentation.dto.user.UserResponse
+import presentation.dto.user.UserResponseSerial
 
 @Serializable
-data class RegisterRequest(
+data class RegisterRequestSerial(
     val email: String,
     val password: String
 )
 
 @Serializable
-data class RegisterResponse(
-    val user: UserResponse
+data class RegisterResponseSerial(
+    val user: UserResponseSerial
 )

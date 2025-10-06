@@ -5,12 +5,12 @@ import presentation.utils.JavaInstantSerializer
 import java.time.Instant
 
 @Serializable
-data class RefreshTokensRequest(
+data class RefreshTokensRequestSerial(
     val refreshToken: String
 )
 
 @Serializable
-data class TokensResponse(
+data class TokensResponseSerial(
     val accessToken: String,
     val refreshToken: String,
     @Serializable(with = JavaInstantSerializer::class)

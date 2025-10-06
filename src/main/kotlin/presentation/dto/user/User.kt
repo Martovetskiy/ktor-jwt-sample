@@ -3,6 +3,6 @@ package presentation.dto.user
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class UserResponse(
+data class UserResponseSerial(
     val email: String
-)
+){}

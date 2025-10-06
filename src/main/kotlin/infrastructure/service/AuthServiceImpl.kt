@@ -7,9 +7,9 @@ import application.dto.auth.RegisterRequest
 import application.dto.auth.RegisterResponse
 import application.dto.auth.TokensResponse
 import application.service.AuthService
-import application.usecase.LoginUseCase
-import application.usecase.RefreshTokensUseCase
-import application.usecase.RegisterUseCase
+import application.usecase.auth.LoginUseCase
+import application.usecase.auth.RefreshTokensUseCase
+import application.usecase.auth.RegisterUseCase
 
 class AuthServiceImpl(
     private val loginUseCase: LoginUseCase,

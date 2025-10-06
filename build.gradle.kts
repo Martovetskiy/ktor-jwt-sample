@@ -2,6 +2,7 @@ plugins {
     kotlin("jvm") version "2.2.20"
     id("io.ktor.plugin") version "3.3.0"
     alias(libs.plugins.jetbrains.kotlin.plugin.serialization)
+    id("tech.mappie.plugin") version "2.2.20-1.5.0"
 }
 
 group = "com.rednoir"

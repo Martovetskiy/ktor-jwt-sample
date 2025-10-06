@@ -1,8 +1,5 @@
 package presentation.routes
 
-import application.dto.auth.LoginRequest
-import application.dto.auth.RefreshTokensRequest
-import application.dto.auth.RegisterRequest
 import application.service.AuthService
 import domain.exception.UserAlreadyExistException
 import domain.exception.UserNotFoundException
@@ -11,39 +8,22 @@ import io.ktor.http.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import presentation.dto.auth.LoginResponse
-import presentation.dto.auth.RegisterResponse
-import presentation.dto.auth.TokensResponse
-import presentation.dto.user.UserResponse
-import presentation.dto.auth.LoginRequest as LoginRequestPres
-import presentation.dto.auth.RefreshTokensRequest as RefreshTokensRequestPres
-import presentation.dto.auth.RegisterRequest as RegisterRequestPres
+import presentation.dto.auth.LoginRequestSerial
+import presentation.dto.auth.RefreshTokensRequestSerial
+import presentation.dto.auth.RegisterRequestSerial
+import presentation.mapper.*
 
 fun Route.authRoutes(
     authService: AuthService
 ) {
     route("/auth") {
-
         post("/login") {
-            val req = call.receive<LoginRequestPres>()
+            val req = call.receive<LoginRequestSerial>()
             try {
-                val loginRequest = LoginRequest(
-                    email = req.email,
-                    password = req.password
+                val result = authService.login(
+                    LoginRequestMapper.map(req)
                 )
-                val result = authService.login(loginRequest)
-
-                //TODO: Create AutoMapper
-                val response = LoginResponse(
-                    user = UserResponse(
-                        result.user.email
-                    ),
-                    tokens = TokensResponse(
-                        result.tokens.accessToken,
-                        result.tokens.refreshToken,
-                        result.tokens.expireAt
-                    )
-                )
+                val response = LoginResponseMapper.map(result)
 
                 call.respond(HttpStatusCode.OK, response)
             } catch (e: UserNotFoundException) {
@@ -54,19 +34,12 @@ fun Route.authRoutes(
         }
 
         post("/register") {
-            val req = call.receive<RegisterRequestPres>()
+            val req = call.receive<RegisterRequestSerial>()
             try {
-                val registerRequest = RegisterRequest(
-                    email = req.email,
-                    password = req.password
-                )
+                val registerRequest = RegisterRequestMapper.map(req)
                 val result = authService.register(registerRequest)
 
-                val response = RegisterResponse(
-                    user = UserResponse(
-                        result.user.email
-                    )
-                )
+                val response = RegisterResponseMapper.map(result)
 
                 call.respond(HttpStatusCode.Created, response)
             } catch (e: UserAlreadyExistException) {
@@ -77,18 +50,12 @@ fun Route.authRoutes(
         }
 
         post("/refresh") {
-            val req = call.receive<RefreshTokensRequestPres>()
+            val req = call.receive<RefreshTokensRequestSerial>()
             try {
-                val request = RefreshTokensRequest(
-                    refreshToken = req.refreshToken
-                )
+                val request = RefreshTokensRequestMapper.map(req)
                 val result = authService.refresh(request)
 
-                val response = TokensResponse(
-                    result.accessToken,
-                    result.refreshToken,
-                    result.expireAt
-                )
+                val response = TokensResponseMapper.map(result)
 
                 call.respond(HttpStatusCode.OK, response)
             } catch (e: TokenWrongType) {

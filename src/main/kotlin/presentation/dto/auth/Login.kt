@@ -1,16 +1,16 @@
 package presentation.dto.auth
 
 import kotlinx.serialization.Serializable
-import presentation.dto.user.UserResponse
+import presentation.dto.user.UserResponseSerial
 
 @Serializable
-data class LoginRequest(
+data class LoginRequestSerial(
     val email: String,
     val password: String
 )
 
 @Serializable
-data class LoginResponse(
-    val user: UserResponse,
-    val tokens: TokensResponse
+data class LoginResponseSerial(
+    val user: UserResponseSerial,
+    val tokens: TokensResponseSerial
 )

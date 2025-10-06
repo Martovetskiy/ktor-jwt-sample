@@ -23,4 +23,4 @@ class UserNotFoundException(message: String? = null, base: String = "User not fo
 class LoginFailedException(message: String? = null, base: String = "Invalid authentication") :
     Exception(message(base = base, message = message))
 
-fun message(base: String, message: String?) = base + if(message.isNullOrEmpty()) ": $message" else ""
+fun message(base: String, message: String?) = base + if (!message.isNullOrEmpty()) ": $message" else ""
