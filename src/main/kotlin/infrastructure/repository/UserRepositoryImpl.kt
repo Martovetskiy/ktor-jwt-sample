@@ -6,6 +6,8 @@ import domain.vo.Email
 import infrastructure.database.entity.UserEntity
 import infrastructure.database.table.UserTable
 import org.jetbrains.exposed.sql.transactions.transaction
+import java.time.LocalDateTime
+import java.time.ZoneOffset
 
 class UserRepositoryImpl : UserRepository {
     override suspend fun findByEmail(email: Email): User? = transaction {
@@ -24,6 +26,8 @@ class UserRepositoryImpl : UserRepository {
         val newUser = UserEntity.new {
             email = entity.email
             password = entity.passwordHash
+            name = entity.name
+            createdAt = LocalDateTime.ofInstant(entity.createdAt, ZoneOffset.UTC)
         }
 
         newUser.toUser()
@@ -31,6 +35,9 @@ class UserRepositoryImpl : UserRepository {
 
     override suspend fun update(entity: User): User = transaction {
         val userEntity = UserEntity[entity.id]
+        userEntity.apply {
+            name = entity.name
+        }
         userEntity.toUser()
     }
 

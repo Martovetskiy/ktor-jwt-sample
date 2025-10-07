@@ -10,6 +10,7 @@ import domain.exception.UserAlreadyExistException
 import domain.repository.UserRepository
 import domain.vo.Email
 import domain.vo.PasswordHash
+import java.time.Instant
 
 class RegisterUseCase(
     private val userRepository: UserRepository,
@@ -22,15 +23,21 @@ class RegisterUseCase(
 
         val passwordHash = passwordProvider.hash(request.password)
 
+        //TODO: Created Automapper
+
         val newUser = User(
             email = Email(request.email),
-            passwordHash = PasswordHash(passwordHash)
+            passwordHash = PasswordHash(passwordHash),
+            name = request.name,
+            createdAt = Instant.now()
         )
 
         userRepository.create(newUser)
             .let {
                 return RegisterResponse(user = UserResponse(
-                    email = it.email.value
+                    email = it.email.value,
+                    name = it.name,
+                    createdAt = it.createdAt
                 ))
             }
     }

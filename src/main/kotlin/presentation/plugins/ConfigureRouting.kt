@@ -11,8 +11,8 @@ import presentation.routes.authRoutes
 import presentation.routes.userRoutes
 
 fun Application.configureRouting() {
-    val authService: AuthService by inject()
-    val userService: UserService by inject()
+    val authService: AuthService by inject<AuthService>()
+    val userService: UserService by inject<UserService>()
     routing {
         staticResources("/openapi","openapi")
         authRoutes(

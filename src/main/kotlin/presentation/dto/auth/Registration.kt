@@ -6,7 +6,8 @@ import presentation.dto.user.UserResponseSerial
 @Serializable
 data class RegisterRequestSerial(
     val email: String,
-    val password: String
+    val password: String,
+    val name: String? = null
 )
 
 @Serializable

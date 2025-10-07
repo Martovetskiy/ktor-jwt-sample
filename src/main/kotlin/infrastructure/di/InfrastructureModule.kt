@@ -4,6 +4,11 @@ import application.PasswordProvider
 import application.service.AuthService
 import application.service.AuthTokenService
 import application.service.UserService
+import application.usecase.auth.LoginUseCase
+import application.usecase.auth.RefreshTokensUseCase
+import application.usecase.auth.RegisterUseCase
+import application.usecase.user.UserGetMeUseCase
+import application.usecase.user.UserUpdateMeUseCase
 import domain.repository.UserRepository
 import infrastructure.security.BCryptPasswordProvider
 import infrastructure.security.JwtAuthTokenService
@@ -20,9 +25,9 @@ val infrastructureModule = module{
     single<UserRepository> { UserRepositoryImpl() }
 
     single<AuthService> { AuthServiceImpl(
-        loginUseCase = get(),
-        registerUseCase = get(),
-        refreshTokensUseCase = get()
+        loginUseCase = get<LoginUseCase>(),
+        registerUseCase = get<RegisterUseCase>(),
+        refreshTokensUseCase = get<RefreshTokensUseCase>()
     ) }
 
     single<PasswordProvider> { BCryptPasswordProvider() }
@@ -30,6 +35,7 @@ val infrastructureModule = module{
         config = get<Config>().jwt
     ) }
     single<UserService> { UserServiceImpl(
-        userGetMeUseCase = get()
+        userGetMeUseCase = get<UserGetMeUseCase>(),
+        userUpdateMeUseCase = get<UserUpdateMeUseCase>()
     ) }
 }

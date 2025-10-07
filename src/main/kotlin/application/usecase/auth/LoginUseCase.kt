@@ -19,12 +19,14 @@ class LoginUseCase(
     override suspend fun execute(request: LoginRequest): LoginResponse{
         val user = userRepository.findByEmail(Email(request.email)) ?: throw UserNotFoundException(request.email)
         val isPasswordEqual = passwordProvider.equals(request.password, user.passwordHash.value)
-
+        //TODO: Create Automapper
         if (isPasswordEqual){
             val tokens = authTokenService.createTokens(user.id)
             return LoginResponse(
                 user = UserResponse(
-                    email = user.email.value
+                    email = user.email.value,
+                    name = user.name,
+                    createdAt = user.createdAt
                 ),
                 tokens = tokens
             )

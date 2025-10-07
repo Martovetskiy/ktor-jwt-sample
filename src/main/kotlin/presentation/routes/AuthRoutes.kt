@@ -5,6 +5,7 @@ import domain.exception.UserAlreadyExistException
 import domain.exception.UserNotFoundException
 import infrastructure.exception.TokenWrongType
 import io.ktor.http.*
+import io.ktor.server.plugins.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
@@ -28,23 +29,26 @@ fun Route.authRoutes(
                 call.respond(HttpStatusCode.OK, response)
             } catch (e: UserNotFoundException) {
                 call.respond(HttpStatusCode.NotFound, "${e.message}")
+            } catch (e: BadRequestException){
+                call.respond(HttpStatusCode.BadRequest, "${e.cause!!.message}")
             } catch (e: Exception){
                 call.respond(HttpStatusCode.InternalServerError, "${e.message}")
             }
         }
 
         post("/register") {
-            val req = call.receive<RegisterRequestSerial>()
             try {
+                val req = call.receive<RegisterRequestSerial>()
                 val registerRequest = RegisterRequestMapper.map(req)
                 val result = authService.register(registerRequest)
-
                 val response = RegisterResponseMapper.map(result)
-
                 call.respond(HttpStatusCode.Created, response)
             } catch (e: UserAlreadyExistException) {
                 call.respond(HttpStatusCode.Conflict, "${e.message}")
-            } catch (e: Exception){
+            } catch (e: BadRequestException){
+                call.respond(HttpStatusCode.BadRequest, "${e.cause!!.message}")
+            }
+            catch (e: Exception) {
                 call.respond(HttpStatusCode.InternalServerError, "${e.message}")
             }
         }
@@ -58,7 +62,11 @@ fun Route.authRoutes(
                 val response = TokensResponseMapper.map(result)
 
                 call.respond(HttpStatusCode.OK, response)
-            } catch (e: TokenWrongType) {
+            }
+            catch (e: BadRequestException){
+                call.respond(HttpStatusCode.BadRequest, "${e.cause!!.message}")
+            }
+            catch (e: TokenWrongType) {
                 call.respond(HttpStatusCode.Unauthorized, "${e.message}")
             }
         }

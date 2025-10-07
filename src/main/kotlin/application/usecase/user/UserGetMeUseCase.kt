@@ -11,9 +11,11 @@ class UserGetMeUseCase(
 ): BaseUseCase<UserGetMeRequest, UserResponse> {
     override suspend fun execute(request: UserGetMeRequest): UserResponse {
         val user = userRepository.findById(request.userID) ?: throw UserNotFoundException()
-
+        //TODO: Create automapper
         return UserResponse(
-            email = user.email.value
+            email = user.email.value,
+            name = user.name,
+            createdAt = user.createdAt
         )
     }
 }

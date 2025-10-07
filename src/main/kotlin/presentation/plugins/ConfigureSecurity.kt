@@ -17,7 +17,7 @@ import org.koin.ktor.ext.inject
 
 //TODO: Remind this
 fun Application.configureSecurity() {
-    val authTokenService: AuthTokenService by inject()
+    val authTokenService: AuthTokenService by inject<AuthTokenService>()
     install(Authentication) {
         jwt("auth-jwt") {
             realm = "Ktor Server"

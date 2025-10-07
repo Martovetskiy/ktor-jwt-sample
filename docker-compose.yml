@@ -66,6 +66,8 @@ services:
       retries: 6
       start_period: 10s
     restart: unless-stopped
+    ports:
+      - "5432:5432"
     networks:
       - app-network
     logging:
