@@ -1,7 +1,6 @@
 package application.di
 
 import application.PasswordProvider
-import application.service.AuthService
 import application.service.AuthTokenService
 import application.usecase.auth.LoginUseCase
 import application.usecase.auth.RefreshTokensUseCase
