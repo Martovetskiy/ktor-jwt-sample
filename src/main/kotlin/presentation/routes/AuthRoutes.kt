@@ -1,6 +1,7 @@
 package presentation.routes
 
 import application.service.AuthService
+import domain.exception.LoginFailedException
 import domain.exception.UserAlreadyExistException
 import domain.exception.UserNotFoundException
 import infrastructure.exception.TokenWrongType
@@ -29,6 +30,8 @@ fun Route.authRoutes(
                 call.respond(HttpStatusCode.OK, response)
             } catch (e: UserNotFoundException) {
                 call.respond(HttpStatusCode.NotFound, "${e.message}")
+            } catch (e: LoginFailedException){
+                call.respond(HttpStatusCode.Unauthorized, "${e.message}")
             } catch (e: BadRequestException){
                 call.respond(HttpStatusCode.BadRequest, "${e.cause!!.message}")
             } catch (e: Exception){
