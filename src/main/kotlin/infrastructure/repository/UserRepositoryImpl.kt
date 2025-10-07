@@ -5,24 +5,31 @@ import domain.repository.UserRepository
 import domain.vo.Email
 import infrastructure.database.entity.UserEntity
 import infrastructure.database.table.UserTable
+import infrastructure.mapper.UserMapper
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 
 class UserRepositoryImpl : UserRepository {
     override suspend fun findByEmail(email: Email): User? = transaction {
-        val result = UserEntity.find { UserTable.email eq email.value }.firstOrNull()
-        result?.toUser()
+        UserEntity.find { UserTable.email eq email.value }.firstOrNull()?.let {
+            UserMapper.map(it)
+        }
+
     }
     override suspend fun findById(id: Int): User? = transaction {
-        UserEntity.findById(id)?.toUser()
+        UserEntity.findById(id)?.let {
+            UserMapper.map(it)
+        }
+
     }
 
     override suspend fun findAll(): List<User> = transaction {
-        UserEntity.all().map { it.toUser() }
+        UserEntity.all().map { UserMapper.map(it) }
     }
 
     override suspend fun create(entity: User): User = transaction {
+        //TODO: Maybe create mapper?
         val newUser = UserEntity.new {
             email = entity.email
             password = entity.passwordHash
@@ -30,7 +37,7 @@ class UserRepositoryImpl : UserRepository {
             createdAt = LocalDateTime.ofInstant(entity.createdAt, ZoneOffset.UTC)
         }
 
-        newUser.toUser()
+        UserMapper.map(newUser)
     }
 
     override suspend fun update(entity: User): User = transaction {
@@ -38,7 +45,7 @@ class UserRepositoryImpl : UserRepository {
         userEntity.apply {
             name = entity.name
         }
-        userEntity.toUser()
+        UserMapper.map(userEntity)
     }
 
     override suspend fun delete(id: Int) = transaction {

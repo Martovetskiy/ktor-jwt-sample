@@ -3,7 +3,7 @@ package application.usecase.auth
 import application.PasswordProvider
 import application.dto.auth.RegisterRequest
 import application.dto.auth.RegisterResponse
-import application.dto.user.UserResponse
+import application.mapper.UserMapper
 import application.usecase.BaseUseCase
 import domain.entity.User
 import domain.exception.UserAlreadyExistException
@@ -23,8 +23,6 @@ class RegisterUseCase(
 
         val passwordHash = passwordProvider.hash(request.password)
 
-        //TODO: Created Automapper
-
         val newUser = User(
             email = Email(request.email),
             passwordHash = PasswordHash(passwordHash),
@@ -34,11 +32,9 @@ class RegisterUseCase(
 
         userRepository.create(newUser)
             .let {
-                return RegisterResponse(user = UserResponse(
-                    email = it.email.value,
-                    name = it.name,
-                    createdAt = it.createdAt
-                ))
+                return RegisterResponse(
+                    user = UserMapper.map(it)
+                )
             }
     }
 }
