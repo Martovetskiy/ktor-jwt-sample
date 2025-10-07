@@ -1,15 +1,24 @@
 openapi: 3.0.3
 info:
-  title: Title
-  description: Title
-  version: 1.0.0
+  title: Auth & User API
+  description: >
+    Authentication and user profile API for login, registration, token refresh,
+    and retrieving/updating the current authenticated user.
+  version: 1.0.1
 servers:
-  - url: 'http'
+  - url: http://localhost:8080
+    description: Local development
+
+tags:
+  - name: auth
+    description: Authentication related endpoints
+  - name: user
+    description: Endpoints for the authenticated user
+
 paths:
   /auth/login:
     post:
-      tags:
-        - auth
+      tags: [auth]
       summary: User login
       operationId: loginUser
       requestBody:
@@ -19,6 +28,12 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/LoginRequest'
+            examples:
+              valid:
+                summary: Valid login
+                value:
+                  email: user@example.com
+                  password: StrongPass123
       responses:
         '200':
           description: Successful login returns user info and tokens
@@ -26,23 +41,46 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/LoginResponse'
+        '400':
+          description: Bad request (validation or malformed body)
+          content:
+            text/plain:
+              schema:
+                type: string
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
         '404':
           description: User not found
           content:
             text/plain:
               schema:
                 type: string
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            text/plain:
+              schema:
+                type: string
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
         '500':
           description: Internal server error
           content:
             text/plain:
               schema:
                 type: string
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
   /auth/register:
     post:
-      tags:
-        - auth
+      tags: [auth]
       summary: Register a new user
       operationId: registerUser
       requestBody:
@@ -52,6 +90,18 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/RegisterRequest'
+            examples:
+              minimal:
+                summary: Minimal registration
+                value:
+                  email: newuser@example.com
+                  password: NewPass123
+              withName:
+                summary: Registration with name
+                value:
+                  email: johndoe@example.com
+                  password: NewPass123
+                  name: John Doe
       responses:
         '201':
           description: User created successfully
@@ -59,32 +109,50 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RegisterResponse'
+        '400':
+          description: Bad request (validation failure)
+          content:
+            text/plain:
+              schema:
+                type: string
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
         '409':
           description: User already exists
           content:
             text/plain:
               schema:
                 type: string
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
         '500':
           description: Internal server error
           content:
             text/plain:
               schema:
                 type: string
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
   /auth/refresh:
     post:
-      tags:
-        - auth
+      tags: [auth]
       summary: Refresh access and refresh tokens
       operationId: refreshTokens
       requestBody:
-        description: Refresh token request
+        description: Provide existing refresh token to obtain new tokens
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/RefreshTokenRequest'
+            examples:
+              refresh:
+                value:
+                  refreshToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
       responses:
         '200':
           description: New set of tokens returned
@@ -92,14 +160,136 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TokensResponse'
+        '400':
+          description: Bad request (e.g. invalid token format)
+          content:
+            text/plain:
+              schema:
+                type: string
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Refresh token is of wrong type (TokenWrongType)
+          content:
+            text/plain:
+              schema:
+                type: string
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
         '500':
           description: Internal server error
           content:
             text/plain:
               schema:
                 type: string
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /user/getMe:
+    get:
+      tags: [user]
+      summary: Get current authenticated user's profile
+      operationId: getMe
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Current user information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        '400':
+          description: Bad request (e.g. malformed claims)
+          content:
+            text/plain:
+              schema:
+                type: string
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Missing or invalid JWT / invalid properties
+          content:
+            text/plain:
+              schema:
+                type: string
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            text/plain:
+              schema:
+                type: string
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /user/updateMe:
+    post:
+      tags: [user]
+      summary: Update current authenticated user's mutable fields
+      operationId: updateMe
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        description: Fields to update (currently only name)
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserUpdateMeRequest'
+            examples:
+              updateName:
+                value:
+                  name: New Display Name
+      responses:
+        '200':
+          description: Updated user info
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        '400':
+          description: Bad request (validation or empty name, etc.)
+          content:
+            text/plain:
+              schema:
+                type: string
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Missing or invalid JWT / invalid properties
+          content:
+            text/plain:
+              schema:
+                type: string
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            text/plain:
+              schema:
+                type: string
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
 components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
   schemas:
     LoginRequest:
       type: object
@@ -109,9 +299,8 @@ components:
           format: email
         password:
           type: string
-      required:
-        - email
-        - password
+          format: password
+      required: [email, password]
 
     RegisterRequest:
       type: object
@@ -121,17 +310,25 @@ components:
           format: email
         password:
           type: string
-      required:
-        - email
-        - password
+          format: password
+        name:
+          type: string
+          nullable: true
+      required: [email, password]
 
     RefreshTokenRequest:
       type: object
       properties:
         refreshToken:
           type: string
-      required:
-        - refreshToken
+      required: [refreshToken]
+
+    UserUpdateMeRequest:
+      type: object
+      properties:
+        name:
+          type: string
+      required: [name]
 
     UserResponse:
       type: object
@@ -139,8 +336,13 @@ components:
         email:
           type: string
           format: email
-      required:
-        - email
+        name:
+          type: string
+          nullable: true
+        createdAt:
+          type: string
+          format: date-time
+      required: [email, createdAt]
 
     TokensResponse:
       type: object
@@ -152,10 +354,7 @@ components:
         expireAt:
           type: string
           format: date-time
-      required:
-        - accessToken
-        - refreshToken
-        - expireAt
+      required: [accessToken, refreshToken, expireAt]
 
     LoginResponse:
       type: object
@@ -164,14 +363,26 @@ components:
           $ref: '#/components/schemas/UserResponse'
         tokens:
           $ref: '#/components/schemas/TokensResponse'
-      required:
-        - user
-        - tokens
+      required: [user, tokens]
 
     RegisterResponse:
       type: object
       properties:
         user:
           $ref: '#/components/schemas/UserResponse'
-      required:
-        - user
+      required: [user]
+
+    ErrorResponse:
+      type: object
+      description: Standard error response (optional structured alternative to plain text)
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+        status:
+          type: integer
+        timestamp:
+          type: string
+          format: date-time
+      required: [error, message, status, timestamp]
